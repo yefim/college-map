@@ -8,7 +8,8 @@
   "license": "MIT",
   "dependencies": {},
   "scripts": {
-    "start": "webpack -p"
+    "start": "webpack -p",
+    "watch": "webpack -d -w"
   },
   "devDependencies": {
     "babel-loader": "^7.1.4",

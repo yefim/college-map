@@ -18,6 +18,7 @@ ENCODED_CLIENT_CREDENTIALS = Base64.strict_encode64("#{CLIENT_ID}:#{CLIENT_SECRE
 
 set :bind, SERVER_IP if defined?(SERVER_IP)
 set :port, SERVER_PORT if defined?(SERVER_PORT)
+set :public_folder, Proc.new { File.join(root, 'dist') }
 
 get '/' do
   erb :index
