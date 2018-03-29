@@ -6,9 +6,13 @@
   "keywords": [],
   "author": "",
   "license": "MIT",
-  "dependencies": {
-  },
+  "dependencies": {},
   "scripts": {
-    "start": "true"
+    "start": "webpack -p"
+  },
+  "devDependencies": {
+    "babel-loader": "^7.1.4",
+    "webpack": "^4.4.1",
+    "webpack-cli": "^2.0.13"
   }
 }
