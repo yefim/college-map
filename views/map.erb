@@ -1,7 +1,8 @@
 <main role="main">
   <h1>Your College Map</h1>
-  <div id="college-map"></div>
+  <div id="college-map" style="height: 400px; width: 100%;"></div>
 </main>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=<%= GOOGLE_MAPS_API_KEY %>&callback=initMap"></script>
 <script src="main.js"></script>
