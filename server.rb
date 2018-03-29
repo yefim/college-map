@@ -1,6 +1,7 @@
 require 'sinatra'
 require 'rest-client'
 require 'base64'
+require 'sysrandom/securerandom'
 
 require_relative './secrets' if Pathname.new('./secrets.rb').exist?
 
@@ -19,6 +20,7 @@ ENCODED_CLIENT_CREDENTIALS = Base64.strict_encode64("#{CLIENT_ID}:#{CLIENT_SECRE
 set :bind, SERVER_IP if defined?(SERVER_IP)
 set :port, SERVER_PORT if defined?(SERVER_PORT)
 set :public_folder, Proc.new { File.join(root, 'dist') }
+set :session_secret, ENV.fetch('SESSION_SECRET') { SecureRandom.hex(64) }
 enable :sessions
 
 get '/' do
@@ -28,21 +30,23 @@ end
 get '/map' do
   code = params['code']
 
-  if code.nil? || code.length == 0
+  if session[:access_token].nil? && code && code.length > 0
+    res = RestClient.post("#{BASE_URL}/oauth/token", {
+      code: code,
+      redirect_uri: REDIRECT_URI,
+      grant_type: 'authorization_code'
+    }, {
+      Authorization: "Basic #{ENCODED_CLIENT_CREDENTIALS}",
+      accept: :json
+    }).to_s
+
+    session[:access_token] = JSON.parse(res)['access_token']
+  end
+
+  if session[:access_token].nil?
     redirect to('/')
     return
   end
-
-  res = RestClient.post("#{BASE_URL}/oauth/token", {
-    code: code,
-    redirect_uri: REDIRECT_URI,
-    grant_type: 'authorization_code'
-  }, {
-    Authorization: "Basic #{ENCODED_CLIENT_CREDENTIALS}",
-    accept: :json
-  }).to_s
-
-  session[:access_token] = JSON.parse(res)['access_token']
 
   erb :map
 end
