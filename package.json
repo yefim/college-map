@@ -1,0 +1,14 @@
+{
+  "name": "college-map",
+  "version": "1.0.0",
+  "description": "Interactive College Map",
+  "directories": {},
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+  },
+  "scripts": {
+    "start": "true"
+  }
+}

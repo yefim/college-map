@@ -1,0 +1,6 @@
+/node_modules/
+/secrets.rb
+/public/assets/bundle.js
+/public/assets/bundle.js.map
+.byebug_history
+/log/
