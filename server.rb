@@ -19,6 +19,7 @@ ENCODED_CLIENT_CREDENTIALS = Base64.strict_encode64("#{CLIENT_ID}:#{CLIENT_SECRE
 set :bind, SERVER_IP if defined?(SERVER_IP)
 set :port, SERVER_PORT if defined?(SERVER_PORT)
 set :public_folder, Proc.new { File.join(root, 'dist') }
+enable :sessions
 
 get '/' do
   erb :index
@@ -32,7 +33,16 @@ get '/map' do
     return
   end
 
-  puts code
+  res = RestClient.post("#{BASE_URL}/oauth/token", {
+    code: code,
+    redirect_uri: REDIRECT_URI,
+    grant_type: 'authorization_code'
+  }, {
+    Authorization: "Basic #{ENCODED_CLIENT_CREDENTIALS}",
+    accept: :json
+  }).to_s
+
+  session[:access_token] = JSON.parse(res)['access_token']
 
   erb :map
 end
@@ -55,10 +65,10 @@ end
               end
     end
 
-    auth_header = request.env['HTTP_AUTHORIZATION']
+    access_token = session[:access_token]
 
     args << {
-      Authorization: auth_header.nil? ? "Basic #{ENCODED_CLIENT_CREDENTIALS}" : auth_header,
+      Authorization: access_token.nil? ? "Basic #{ENCODED_CLIENT_CREDENTIALS}" : "Bearer #{access_token}",
       accept: :json
     }
 
