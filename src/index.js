@@ -1,3 +1,5 @@
+import './styles.css'
+
 import req from './req';
 
 window.initMap = function() {
@@ -24,8 +26,6 @@ window.initMap = function() {
           '</div>'
         ].join('');
 
-        console.log(contentString);
-
         const infoWindow = new google.maps.InfoWindow({
           content: contentString
         });
@@ -34,7 +34,8 @@ window.initMap = function() {
 
         const marker = new google.maps.Marker({
           position: {lat: college.loc[1], lng: college.loc[0]},
-          map: map
+          map: map,
+          animation: google.maps.Animation.DROP
         });
 
         marker.addListener('click', function() {
