@@ -1,1 +1,120 @@
-!function(e){var t={};function n(r){if(t[r])return t[r].exports;var o=t[r]={i:r,l:!1,exports:{}};return e[r].call(o.exports,o,o.exports,n),o.l=!0,o.exports}n.m=e,n.c=t,n.d=function(e,t,r){n.o(e,t)||Object.defineProperty(e,t,{configurable:!1,enumerable:!0,get:r})},n.r=function(e){Object.defineProperty(e,"__esModule",{value:!0})},n.n=function(e){var t=e&&e.__esModule?function(){return e.default}:function(){return e};return n.d(t,"a",t),t},n.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},n.p="",n(n.s=1)}([function(e,t){e.exports=jQuery},function(e,t,n){"use strict";n.r(t);n(6);var r=n(0),o=n.n(r),i=({url:e,method:t,data:n})=>{let r={dataType:"json"};switch(t.toLowerCase()){case"patch":case"post":case"put":r.data=JSON.stringify(n),r.contentType="application/json";break;default:r.data=n}return new Promise((n,i)=>{o.a.ajax({url:e,method:t,...r}).done(e=>{n(e)}).fail(e=>{i(e.responseJSON)})})};window.initMap=function(){const e=new google.maps.Map(document.getElementById("college-map"),{zoom:4,center:{lat:39.5,lng:-98.35}}),t=[];i({url:"/v1/users/me?fields=followedCollegeIds",method:"get"}).then(function({followedCollegeIds:n}){n.forEach(function(n){i({url:`/v1/colleges/${n}?fields=amount,loc,name,logo`,method:"get"}).then(function(n){const r=['<div style="display: flex; flex-direction: column; align-items: center;">',`<p style="font-size: 20px; font-weight: 400;">${n.name}</p>`,`<img height="60" width=60" src="${n.logo}" />`,n.amount?`<p style="font-size: 16px;">You're earning $${n.amount}.</p>`:"","</div>"].join(""),o=new google.maps.InfoWindow({content:r});t.push(o);const i=new google.maps.Marker({position:{lat:n.loc[1],lng:n.loc[0]},map:e,animation:google.maps.Animation.DROP});i.addListener("click",function(){t.forEach(function(e){e.close()}),o.open(e,i)})})})})}},function(e,t){e.exports=function(e){var t="undefined"!=typeof window&&window.location;if(!t)throw new Error("fixUrls requires window.location");if(!e||"string"!=typeof e)return e;var n=t.protocol+"//"+t.host,r=n+t.pathname.replace(/\/[^\/]*$/,"/");return e.replace(/url\s*\(((?:[^)(]|\((?:[^)(]+|\([^)(]*\))*\))*)\)/gi,function(e,t){var o,i=t.trim().replace(/^"(.*)"$/,function(e,t){return t}).replace(/^'(.*)'$/,function(e,t){return t});return/^(#|data:|http:\/\/|https:\/\/|file:\/\/\/|\s*$)/i.test(i)?e:(o=0===i.indexOf("//")?i:0===i.indexOf("/")?n+i:r+i.replace(/^\.\//,""),"url("+JSON.stringify(o)+")")})}},function(e,t,n){var r,o,i={},s=(r=function(){return window&&document&&document.all&&!window.atob},function(){return void 0===o&&(o=r.apply(this,arguments)),o}),a=function(e){var t={};return function(e){if("function"==typeof e)return e();if(void 0===t[e]){var n=function(e){return document.querySelector(e)}.call(this,e);if(window.HTMLIFrameElement&&n instanceof window.HTMLIFrameElement)try{n=n.contentDocument.head}catch(e){n=null}t[e]=n}return t[e]}}(),c=null,f=0,u=[],l=n(2);function p(e,t){for(var n=0;n<e.length;n++){var r=e[n],o=i[r.id];if(o){o.refs++;for(var s=0;s<o.parts.length;s++)o.parts[s](r.parts[s]);for(;s<r.parts.length;s++)o.parts.push(b(r.parts[s],t))}else{var a=[];for(s=0;s<r.parts.length;s++)a.push(b(r.parts[s],t));i[r.id]={id:r.id,refs:1,parts:a}}}}function d(e,t){for(var n=[],r={},o=0;o<e.length;o++){var i=e[o],s=t.base?i[0]+t.base:i[0],a={css:i[1],media:i[2],sourceMap:i[3]};r[s]?r[s].parts.push(a):n.push(r[s]={id:s,parts:[a]})}return n}function h(e,t){var n=a(e.insertInto);if(!n)throw new Error("Couldn't find a style target. This probably means that the value for the 'insertInto' parameter is invalid.");var r=u[u.length-1];if("top"===e.insertAt)r?r.nextSibling?n.insertBefore(t,r.nextSibling):n.appendChild(t):n.insertBefore(t,n.firstChild),u.push(t);else if("bottom"===e.insertAt)n.appendChild(t);else{if("object"!=typeof e.insertAt||!e.insertAt.before)throw new Error("[Style Loader]\n\n Invalid value for parameter 'insertAt' ('options.insertAt') found.\n Must be 'top', 'bottom', or Object.\n (https://github.com/webpack-contrib/style-loader#insertat)\n");var o=a(e.insertInto+" "+e.insertAt.before);n.insertBefore(t,o)}}function m(e){if(null===e.parentNode)return!1;e.parentNode.removeChild(e);var t=u.indexOf(e);t>=0&&u.splice(t,1)}function v(e){var t=document.createElement("style");return e.attrs.type="text/css",g(t,e.attrs),h(e,t),t}function g(e,t){Object.keys(t).forEach(function(n){e.setAttribute(n,t[n])})}function b(e,t){var n,r,o,i;if(t.transform&&e.css){if(!(i=t.transform(e.css)))return function(){};e.css=i}if(t.singleton){var s=f++;n=c||(c=v(t)),r=x.bind(null,n,s,!1),o=x.bind(null,n,s,!0)}else e.sourceMap&&"function"==typeof URL&&"function"==typeof URL.createObjectURL&&"function"==typeof URL.revokeObjectURL&&"function"==typeof Blob&&"function"==typeof btoa?(n=function(e){var t=document.createElement("link");return e.attrs.type="text/css",e.attrs.rel="stylesheet",g(t,e.attrs),h(e,t),t}(t),r=function(e,t,n){var r=n.css,o=n.sourceMap,i=void 0===t.convertToAbsoluteUrls&&o;(t.convertToAbsoluteUrls||i)&&(r=l(r));o&&(r+="\n/*# sourceMappingURL=data:application/json;base64,"+btoa(unescape(encodeURIComponent(JSON.stringify(o))))+" */");var s=new Blob([r],{type:"text/css"}),a=e.href;e.href=URL.createObjectURL(s),a&&URL.revokeObjectURL(a)}.bind(null,n,t),o=function(){m(n),n.href&&URL.revokeObjectURL(n.href)}):(n=v(t),r=function(e,t){var n=t.css,r=t.media;r&&e.setAttribute("media",r);if(e.styleSheet)e.styleSheet.cssText=n;else{for(;e.firstChild;)e.removeChild(e.firstChild);e.appendChild(document.createTextNode(n))}}.bind(null,n),o=function(){m(n)});return r(e),function(t){if(t){if(t.css===e.css&&t.media===e.media&&t.sourceMap===e.sourceMap)return;r(e=t)}else o()}}e.exports=function(e,t){if("undefined"!=typeof DEBUG&&DEBUG&&"object"!=typeof document)throw new Error("The style-loader cannot be used in a non-browser environment");(t=t||{}).attrs="object"==typeof t.attrs?t.attrs:{},t.singleton||"boolean"==typeof t.singleton||(t.singleton=s()),t.insertInto||(t.insertInto="head"),t.insertAt||(t.insertAt="bottom");var n=d(e,t);return p(n,t),function(e){for(var r=[],o=0;o<n.length;o++){var s=n[o];(a=i[s.id]).refs--,r.push(a)}e&&p(d(e,t),t);for(o=0;o<r.length;o++){var a;if(0===(a=r[o]).refs){for(var c=0;c<a.parts.length;c++)a.parts[c]();delete i[a.id]}}}};var y,w=(y=[],function(e,t){return y[e]=t,y.filter(Boolean).join("\n")});function x(e,t,n,r){var o=n?"":r.css;if(e.styleSheet)e.styleSheet.cssText=w(t,o);else{var i=document.createTextNode(o),s=e.childNodes;s[t]&&e.removeChild(s[t]),s.length?e.insertBefore(i,s[t]):e.appendChild(i)}}},function(e,t){e.exports=function(e){var t=[];return t.toString=function(){return this.map(function(t){var n=function(e,t){var n=e[1]||"",r=e[3];if(!r)return n;if(t&&"function"==typeof btoa){var o=(s=r,"/*# sourceMappingURL=data:application/json;charset=utf-8;base64,"+btoa(unescape(encodeURIComponent(JSON.stringify(s))))+" */"),i=r.sources.map(function(e){return"/*# sourceURL="+r.sourceRoot+e+" */"});return[n].concat(i).concat([o]).join("\n")}var s;return[n].join("\n")}(t,e);return t[2]?"@media "+t[2]+"{"+n+"}":n}).join("")},t.i=function(e,n){"string"==typeof e&&(e=[[null,e,""]]);for(var r={},o=0;o<this.length;o++){var i=this[o][0];"number"==typeof i&&(r[i]=!0)}for(o=0;o<e.length;o++){var s=e[o];"number"==typeof s[0]&&r[s[0]]||(n&&!s[2]?s[2]=n:n&&(s[2]="("+s[2]+") and ("+n+")"),t.push(s))}},t}},function(e,t,n){(e.exports=n(4)(!1)).push([e.i,"html{box-sizing:border-box}*,:after,:before{box-sizing:inherit}body,html{margin:0;padding:0}body{font-family:Helvetica,sans-serif}",""])},function(e,t,n){var r=n(5);"string"==typeof r&&(r=[[e.i,r,""]]);var o={hmr:!0,transform:void 0,insertInto:void 0};n(3)(r,o);r.locals&&(e.exports=r.locals)}]);
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, {
+/******/ 				configurable: false,
+/******/ 				enumerable: true,
+/******/ 				get: getter
+/******/ 			});
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = "./src/index.js");
+/******/ })
+/************************************************************************/
+/******/ ({
+
+/***/ "./src/index.js":
+/*!**********************!*\
+  !*** ./src/index.js ***!
+  \**********************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _styles_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./styles.css */ \"./src/styles.css\");\n/* harmony import */ var _styles_css__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_styles_css__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _req__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./req */ \"./src/req.js\");\n\n\n\n\nwindow.initMap = function() {\n  const center = {\n    lat: 39.5,\n    lng: -98.35\n  };\n\n  const map = new google.maps.Map(document.getElementById('college-map'), {\n    zoom: 4,\n    center: center\n  });\n\n  const infoWindows = [];\n\n  Object(_req__WEBPACK_IMPORTED_MODULE_1__[\"default\"])({url: '/v1/users/me?fields=followedCollegeIds', method: 'get'}).then(function({followedCollegeIds}) {\n    followedCollegeIds.forEach(function(collegeId) {\n      Object(_req__WEBPACK_IMPORTED_MODULE_1__[\"default\"])({url: `/v1/colleges/${collegeId}?fields=amount,loc,name,logo`, method: 'get'}).then(function(college) {\n        const contentString = [\n          '<div style=\"display: flex; flex-direction: column; align-items: center;\">',\n          `<p style=\"font-size: 20px; font-weight: 400;\">${college.name}</p>`,\n          `<img height=\"60\" width=60\" src=\"${college.logo}\" />`,\n          college.amount ? `<p style=\"font-size: 16px;\">You're earning $${college.amount}.</p>` : '',\n          '</div>'\n        ].join('');\n\n        const infoWindow = new google.maps.InfoWindow({\n          content: contentString\n        });\n\n        infoWindows.push(infoWindow);\n\n        const marker = new google.maps.Marker({\n          position: {lat: college.loc[1], lng: college.loc[0]},\n          map: map,\n          animation: google.maps.Animation.DROP\n        });\n\n        marker.addListener('click', function() {\n          infoWindows.forEach(function(i) {\n            i.close();\n          });\n\n          infoWindow.open(map, marker);\n        });\n      });\n    });\n  });\n};\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9zcmMvaW5kZXguanMuanMiLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vLi9zcmMvaW5kZXguanM/YjYzNSJdLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgJy4vc3R5bGVzLmNzcydcblxuaW1wb3J0IHJlcSBmcm9tICcuL3JlcSc7XG5cbndpbmRvdy5pbml0TWFwID0gZnVuY3Rpb24oKSB7XG4gIGNvbnN0IGNlbnRlciA9IHtcbiAgICBsYXQ6IDM5LjUsXG4gICAgbG5nOiAtOTguMzVcbiAgfTtcblxuICBjb25zdCBtYXAgPSBuZXcgZ29vZ2xlLm1hcHMuTWFwKGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdjb2xsZWdlLW1hcCcpLCB7XG4gICAgem9vbTogNCxcbiAgICBjZW50ZXI6IGNlbnRlclxuICB9KTtcblxuICBjb25zdCBpbmZvV2luZG93cyA9IFtdO1xuXG4gIHJlcSh7dXJsOiAnL3YxL3VzZXJzL21lP2ZpZWxkcz1mb2xsb3dlZENvbGxlZ2VJZHMnLCBtZXRob2Q6ICdnZXQnfSkudGhlbihmdW5jdGlvbih7Zm9sbG93ZWRDb2xsZWdlSWRzfSkge1xuICAgIGZvbGxvd2VkQ29sbGVnZUlkcy5mb3JFYWNoKGZ1bmN0aW9uKGNvbGxlZ2VJZCkge1xuICAgICAgcmVxKHt1cmw6IGAvdjEvY29sbGVnZXMvJHtjb2xsZWdlSWR9P2ZpZWxkcz1hbW91bnQsbG9jLG5hbWUsbG9nb2AsIG1ldGhvZDogJ2dldCd9KS50aGVuKGZ1bmN0aW9uKGNvbGxlZ2UpIHtcbiAgICAgICAgY29uc3QgY29udGVudFN0cmluZyA9IFtcbiAgICAgICAgICAnPGRpdiBzdHlsZT1cImRpc3BsYXk6IGZsZXg7IGZsZXgtZGlyZWN0aW9uOiBjb2x1bW47IGFsaWduLWl0ZW1zOiBjZW50ZXI7XCI+JyxcbiAgICAgICAgICBgPHAgc3R5bGU9XCJmb250LXNpemU6IDIwcHg7IGZvbnQtd2VpZ2h0OiA0MDA7XCI+JHtjb2xsZWdlLm5hbWV9PC9wPmAsXG4gICAgICAgICAgYDxpbWcgaGVpZ2h0PVwiNjBcIiB3aWR0aD02MFwiIHNyYz1cIiR7Y29sbGVnZS5sb2dvfVwiIC8+YCxcbiAgICAgICAgICBjb2xsZWdlLmFtb3VudCA/IGA8cCBzdHlsZT1cImZvbnQtc2l6ZTogMTZweDtcIj5Zb3UncmUgZWFybmluZyAkJHtjb2xsZWdlLmFtb3VudH0uPC9wPmAgOiAnJyxcbiAgICAgICAgICAnPC9kaXY+J1xuICAgICAgICBdLmpvaW4oJycpO1xuXG4gICAgICAgIGNvbnN0IGluZm9XaW5kb3cgPSBuZXcgZ29vZ2xlLm1hcHMuSW5mb1dpbmRvdyh7XG4gICAgICAgICAgY29udGVudDogY29udGVudFN0cmluZ1xuICAgICAgICB9KTtcblxuICAgICAgICBpbmZvV2luZG93cy5wdXNoKGluZm9XaW5kb3cpO1xuXG4gICAgICAgIGNvbnN0IG1hcmtlciA9IG5ldyBnb29nbGUubWFwcy5NYXJrZXIoe1xuICAgICAgICAgIHBvc2l0aW9uOiB7bGF0OiBjb2xsZWdlLmxvY1sxXSwgbG5nOiBjb2xsZWdlLmxvY1swXX0sXG4gICAgICAgICAgbWFwOiBtYXAsXG4gICAgICAgICAgYW5pbWF0aW9uOiBnb29nbGUubWFwcy5BbmltYXRpb24uRFJPUFxuICAgICAgICB9KTtcblxuICAgICAgICBtYXJrZXIuYWRkTGlzdGVuZXIoJ2NsaWNrJywgZnVuY3Rpb24oKSB7XG4gICAgICAgICAgaW5mb1dpbmRvd3MuZm9yRWFjaChmdW5jdGlvbihpKSB7XG4gICAgICAgICAgICBpLmNsb3NlKCk7XG4gICAgICAgICAgfSk7XG5cbiAgICAgICAgICBpbmZvV2luZG93Lm9wZW4obWFwLCBtYXJrZXIpO1xuICAgICAgICB9KTtcbiAgICAgIH0pO1xuICAgIH0pO1xuICB9KTtcbn07XG4iXSwibWFwcGluZ3MiOiJBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBOyIsInNvdXJjZVJvb3QiOiIifQ==\n//# sourceURL=webpack-internal:///./src/index.js\n");
+
+/***/ }),
+
+/***/ "./src/req.js":
+/*!********************!*\
+  !*** ./src/req.js ***!
+  \********************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ \"jquery\");\n/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);\n// libraries\n\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (({url, method, data}) => {\n  let params = {dataType: 'json'};\n\n  switch (method.toLowerCase()) {\n    case 'patch':\n    case 'post':\n    case 'put':\n      params.data = JSON.stringify(data);\n      params.contentType = 'application/json';\n      break;\n    default:\n      params.data = data;\n      break;\n  }\n\n  return new Promise((resolve, reject) => {\n    jquery__WEBPACK_IMPORTED_MODULE_0___default.a.ajax({\n      url,\n      method,\n      ...params\n    }).done((res) => {\n      resolve(res);\n    }).fail((res) => {\n      reject(res.responseJSON);\n    });\n  });\n});\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9zcmMvcmVxLmpzLmpzIiwic291cmNlcyI6WyJ3ZWJwYWNrOi8vLy4vc3JjL3JlcS5qcz9hMDZmIl0sInNvdXJjZXNDb250ZW50IjpbIi8vIGxpYnJhcmllc1xuaW1wb3J0ICQgZnJvbSAnanF1ZXJ5JztcblxuZXhwb3J0IGRlZmF1bHQgKHt1cmwsIG1ldGhvZCwgZGF0YX0pID0+IHtcbiAgbGV0IHBhcmFtcyA9IHtkYXRhVHlwZTogJ2pzb24nfTtcblxuICBzd2l0Y2ggKG1ldGhvZC50b0xvd2VyQ2FzZSgpKSB7XG4gICAgY2FzZSAncGF0Y2gnOlxuICAgIGNhc2UgJ3Bvc3QnOlxuICAgIGNhc2UgJ3B1dCc6XG4gICAgICBwYXJhbXMuZGF0YSA9IEpTT04uc3RyaW5naWZ5KGRhdGEpO1xuICAgICAgcGFyYW1zLmNvbnRlbnRUeXBlID0gJ2FwcGxpY2F0aW9uL2pzb24nO1xuICAgICAgYnJlYWs7XG4gICAgZGVmYXVsdDpcbiAgICAgIHBhcmFtcy5kYXRhID0gZGF0YTtcbiAgICAgIGJyZWFrO1xuICB9XG5cbiAgcmV0dXJuIG5ldyBQcm9taXNlKChyZXNvbHZlLCByZWplY3QpID0+IHtcbiAgICAkLmFqYXgoe1xuICAgICAgdXJsLFxuICAgICAgbWV0aG9kLFxuICAgICAgLi4ucGFyYW1zXG4gICAgfSkuZG9uZSgocmVzKSA9PiB7XG4gICAgICByZXNvbHZlKHJlcyk7XG4gICAgfSkuZmFpbCgocmVzKSA9PiB7XG4gICAgICByZWplY3QocmVzLnJlc3BvbnNlSlNPTik7XG4gICAgfSk7XG4gIH0pO1xufTtcbiJdLCJtYXBwaW5ncyI6IkFBQUE7QUFBQTtBQUFBO0FBQUE7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBOyIsInNvdXJjZVJvb3QiOiIifQ==\n//# sourceURL=webpack-internal:///./src/req.js\n");
+
+/***/ }),
+
+/***/ "./src/styles.css":
+/*!************************!*\
+  !*** ./src/styles.css ***!
+  \************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("// extracted by mini-css-extract-plugin//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9zcmMvc3R5bGVzLmNzcy5qcyIsInNvdXJjZXMiOlsid2VicGFjazovLy8uL3NyYy9zdHlsZXMuY3NzP2RiMWUiXSwic291cmNlc0NvbnRlbnQiOlsiLy8gZXh0cmFjdGVkIGJ5IG1pbmktY3NzLWV4dHJhY3QtcGx1Z2luIl0sIm1hcHBpbmdzIjoiQUFBQSIsInNvdXJjZVJvb3QiOiIifQ==\n//# sourceURL=webpack-internal:///./src/styles.css\n");
+
+/***/ }),
+
+/***/ "jquery":
+/*!*************************!*\
+  !*** external "jQuery" ***!
+  \*************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("module.exports = jQuery;//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoianF1ZXJ5LmpzIiwic291cmNlcyI6WyJ3ZWJwYWNrOi8vL2V4dGVybmFsIFwialF1ZXJ5XCI/Y2QwYyJdLCJzb3VyY2VzQ29udGVudCI6WyJtb2R1bGUuZXhwb3J0cyA9IGpRdWVyeTsiXSwibWFwcGluZ3MiOiJBQUFBIiwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///jquery\n");
+
+/***/ })
+
+/******/ });
