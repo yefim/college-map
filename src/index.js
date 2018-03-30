@@ -33,12 +33,13 @@ window.initMap = function() {
 
   req({url: '/v1/users/me?fields=followedCollegeIds', method: 'get'}).then(function({followedCollegeIds}) {
     followedCollegeIds.forEach(function(collegeId) {
-      req({url: `/v1/colleges/${collegeId}?fields=amount,loc,name,logo`, method: 'get'}).then(function(college) {
+      req({url: `/v1/colleges/${collegeId}?fields=amount,loc,name,logo,slug`, method: 'get'}).then(function(college) {
         const contentString = [
           '<div style="display: flex; flex-direction: column; align-items: center;">',
-          `<p style="font-size: 20px; font-weight: 400;">${college.name}</p>`,
-          `<img height="60" width=60" src="${college.logo}" />`,
-          college.amount ? `<p style="font-size: 16px;">You're earning $${college.amount}.</p>` : '',
+          `<p style="font-size: 20px; font-weight: 400; margin: 0 0 12px 0;">${college.name}</p>`,
+          `<img height="60" width=60" style="margin: 0 0 12px 0;" src="${college.logo}" />`,
+          college.amount ? `<p style="font-size: 16px; margin: 0 0 12px 0;">You're earning $${college.amount}.</p>` : '',
+          `<a style="font-size: 16px; display: block;" href="https://www.raise.me/edu/${college.slug}?ref=college-map">View on RaiseMe</a>`,
           '</div>'
         ].join('');
 
