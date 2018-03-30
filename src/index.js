@@ -2,14 +2,30 @@ import './styles.css'
 
 import req from './req';
 
+let beginDrop = false;
+let needToDrop = [];
+
+$(document).ready(function() {
+  $('.modal button').on('click', function() {
+    $('.modal').remove();
+    $('.overlay').remove();
+    beginDrop = true;
+    if (window.map) {
+      needToDrop.forEach(function(marker) {
+        marker.setMap(map);
+      });
+    }
+  });
+});
+
 window.initMap = function() {
   const center = {
     lat: 39.5,
     lng: -98.35
   };
 
-  const map = new google.maps.Map(document.getElementById('college-map'), {
-    zoom: 4,
+  window.map = new google.maps.Map(document.getElementById('college-map'), {
+    zoom: 5,
     center: center
   });
 
@@ -34,7 +50,7 @@ window.initMap = function() {
 
         const marker = new google.maps.Marker({
           position: {lat: college.loc[1], lng: college.loc[0]},
-          map: map,
+          title: college.name,
           animation: google.maps.Animation.DROP
         });
 
@@ -45,6 +61,12 @@ window.initMap = function() {
 
           infoWindow.open(map, marker);
         });
+
+        if (beginDrop) {
+          marker.setMap(map);
+        } else {
+          needToDrop.push(marker);
+        }
       });
     });
   });

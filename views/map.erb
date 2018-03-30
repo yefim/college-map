@@ -1,7 +1,17 @@
-<main role="main">
+<main class="mappage" role="main">
   <h1>Your College Map</h1>
-  <div id="college-map" style="height: 400px; width: 100%;"></div>
+  <div id="college-map"></div>
 </main>
+
+<div class="overlay">
+  <div class="modal">
+    <h1>Welcome to College Map.</h1>
+    <p>
+      Suspendisse vel turpis efficitur sem placerat euismod. Aenean tristique neque at enim rutrum, interdum consequat purus fermentum. Morbi a lacus commodo, porttitor felis ac, suscipit tortor. Pellentesque lobortis arcu quis mattis iaculis. Suspendisse rutrum mi est, vel venenatis justo tempor tincidunt. Morbi congue sodales tempor. Nunc libero elit, porttitor et justo ut, lobortis ultricies urna. Vivamus a tellus id metus eleifend facilisis. Proin convallis justo lorem, ac congue nibh laoreet ut. Duis orci erat, gravida mattis tristique et, porttitor at est. Nulla venenatis purus eu interdum tincidunt. Ut ullamcorper est eu nibh congue auctor. Maecenas fermentum, ipsum vitae eleifend rutrum, nunc leo venenatis tortor, vitae tempus nisl libero ac nibh.
+    </p>
+    <button type="button">Continue</button>
+  </div>
+</div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=<%= GOOGLE_MAPS_API_KEY %>&callback=initMap"></script>

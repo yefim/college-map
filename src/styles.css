@@ -98,3 +98,75 @@ nav {
   border-radius: 4px;
   margin: 48px auto 0 auto;
 }
+
+.mappage {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+#college-map {
+  height: 100%;
+  width: 100%;
+}
+
+.mappage h1 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  margin: 0;
+  padding: 20px;
+  background: white;
+}
+
+.overlay {
+  background: rgba(0, 0, 0, 0.9);
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+.modal {
+  background: white;
+  padding: 40px;
+  max-width: 600px;
+  margin: 40px auto 0 auto;
+  border-radius: 4px;
+  animation: modal 0.5s;
+}
+
+.modal h1 {
+  margin: 0;
+}
+
+.modal p {
+  margin: 0;
+}
+
+.modal button {
+  display: block;
+  border: 0;
+  background: #2256e5;
+  padding: 12px 0;
+  width: 120px;
+  color: white;
+  border-radius: 4px;
+  font-size: 16px;
+  margin: 0 0 0 auto;
+  cursor: pointer;
+}
+
+@keyframes modal {
+  from {
+    opacity: 0.2;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
